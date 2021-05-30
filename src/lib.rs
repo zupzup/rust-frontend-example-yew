@@ -15,7 +15,7 @@ mod todo;
 
 pub type Anchor = RouterAnchor<AppRoute>;
 
-struct Model {
+struct TodoApp {
     link: ComponentLink<Self>,
     todos: Option<Vec<Todo>>,
     fetch_task: Option<FetchTask>,
@@ -43,7 +43,7 @@ pub struct Todo {
     pub completed: bool,
 }
 
-impl Component for Model {
+impl Component for TodoApp {
     type Message = Msg;
     type Properties = ();
     fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
@@ -90,7 +90,7 @@ impl Component for Model {
     fn view(&self) -> Html {
         let todos = self.todos.clone();
         let cb = self.link.callback(|_| Msg::MakeReq);
-        ConsoleService::info(&format!("render model: {:?}", todos));
+        ConsoleService::info(&format!("render TodoApp: {:?}", todos));
         html! {
             <div class=classes!("todo")>
                 <div class=classes!("nav")>
@@ -129,5 +129,5 @@ impl Component for Model {
 
 #[wasm_bindgen(start)]
 pub fn run_app() {
-    App::<Model>::new().mount_to_body();
+    App::<TodoApp>::new().mount_to_body();
 }
